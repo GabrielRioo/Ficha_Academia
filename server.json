@@ -1,0 +1,20 @@
+{
+    "cards": [
+        {
+            "id": 1,
+            "name": "Supino Reto",
+            "series": 3,
+            "repetitions": 3,
+            "weight": 10,
+            "createdAt": "2023-06-10T23:36:32.746Z"
+        },
+        {
+            "id": 2,
+            "name": "Supino Inclinado",
+            "series": 3,
+            "repetitions": 3,
+            "weight": 10,
+            "createdAt": "2023-06-11T23:36:32.746Z"
+        }
+    ]
+}

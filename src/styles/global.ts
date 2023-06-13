@@ -13,6 +13,11 @@ export const GlobalStyle = createGlobalStyle `
         -webkit-font-smoothing: antialised;
     }
 
+    :focus {
+        outline: 0;
+        box-shadow: 0 0 0 2px ${props => props.theme['green-500']};
+    }
+
     body, input-security, textarea, button {
         font: 400 1rem Roboto, sans-serif;
     }
