@@ -13,9 +13,18 @@ export const HeaderContainer = styled.header `
 `
 
 export const NewGymCardButton = styled.button `
-    padding: .6rem;
+    padding: .8rem 1.5rem;
 
+    border: 0;
     border-radius: 6px;
-    background-color: ${props => props.theme['green-300']}
+    background-color: ${props => props.theme['green-300']};
+    color: ${props => props.theme.white};
+    font-weight: bold;
 
+    cursor: pointer;
+
+    &:not(:disabled):hover {
+        background-color: ${props => props.theme['green-500']};
+        transition: background-color .2s;
+    }
 `
