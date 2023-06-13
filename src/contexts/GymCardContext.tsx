@@ -1,6 +1,12 @@
 import { ReactNode, createContext, useEffect, useState } from "react"
 
 interface Card {
+    title: string;
+    weekDate: string,
+    training: Training[]
+}
+
+interface Training {
     id: number;
     name: string;
     series: number;
@@ -20,13 +26,15 @@ export const GymCardContext = createContext({} as GymCardContextType)
 
 export function GymCardProvider({children}: GymCardProviderProps) {
     const [cards, setCards] = useState<Card[]>([])
+    const [training, setTraining] = useState<Training[]>([])
+    
 
     // Obter os cards criados
     async function LoadCards() {
         const response = await fetch('http://localhost:3000/cards');
-        const data = await response.json();
+        const dataCard = await response.json();
 
-        setCards(data);
+        setCards(dataCard);
     }
 
     useEffect(() => {

@@ -8,51 +8,90 @@ import * as Dialog from '@radix-ui/react-dialog';
 export function GymCard() {
     const { cards } = useContext(GymCardContext)
 
-    
+
     return (
-        <GymCardContainer>
-            <GymCardTable>
-                <thead>
-                    <tr>
-                        <th>Nome Treino</th>
-                        <th>Serie</th>
-                        <th>Repetições</th>
-                        <th>Carga</th>
-                        <th>Configurar</th>
-                    </tr>
-                </thead>
+        <div>
+            {
+                cards.map(card => {
+                    return (
+                        <GymCardContainer>
+                            <div>
+                                <h2>{card.title}</h2>
+                                <p>{card.weekDate}</p>
+                            </div>
 
-                <tbody>
-                    {
-                        cards.map(props => {
-                            return (
-                                <tr key={props.id}>
-                                    <td>{props.name}</td>
-                                    <td>{props.series}</td>
-                                    <td>{props.repetitions}</td>
-                                    <td>{props.weight}</td>
+                            <GymCardTable>
+                                <thead>
+                                    <tr>
+                                        <th>Nome Treino</th>
+                                        <th>Serie</th>
+                                        <th>Repetições</th>
+                                        <th>Carga</th>
+                                        <th>Configurar</th>
+                                    </tr>
+                                </thead>
 
-                                    <GymCardButtons>
-                                        <Image size={24} color="#00B37E" />
-                                        <Pencil size={24} color="#1D8DD3" />
-                                        <Trash size={24} color="#F75A68" />
-                                    </GymCardButtons>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </GymCardTable>
+                                <tbody>
+                                    {
+                                        card.training.map(training => {
+                                            return (
+                                                <tr key={training.id}>
+                                                    <td>{training.name}</td>
+                                                    <td>{training.series}</td>
+                                                    <td>{training.repetitions}</td>
+                                                    <td>{training.weight}</td>
 
-            <Dialog.Root>
-                <Dialog.Trigger asChild>
-                    <GymCardNewTraining >Adicionar Novo Treino</GymCardNewTraining>
-                </Dialog.Trigger>
+                                                    <GymCardButtons>
+                                                        <Dialog.Root>
+                                                            <Dialog.Trigger asChild>
+                                                                <Image size={24} color="#00B37E" />
+                                                            </Dialog.Trigger>
 
-                <NewGymTrainingModal />
-            </Dialog.Root>
+                                                            <NewGymTrainingModal type="picture" />
+                                                        </Dialog.Root>
+
+                                                        <Dialog.Root>
+                                                            <Dialog.Trigger asChild>
+                                                            <Pencil size={24} color="#1D8DD3" />
+
+                                                            </Dialog.Trigger>
+
+                                                            <NewGymTrainingModal type="edit" />
+                                                        </Dialog.Root>
+
+                                                        <Dialog.Root>
+                                                            <Dialog.Trigger asChild>
+                                                            <Trash size={24} color="#F75A68" />
 
 
-        </GymCardContainer>
+                                                            </Dialog.Trigger>
+
+                                                            <NewGymTrainingModal type="delete" />
+                                                        </Dialog.Root>
+                                                    </GymCardButtons>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </GymCardTable>
+
+                            <Dialog.Root>
+                                <Dialog.Trigger asChild>
+                                    <GymCardNewTraining >Adicionar Novo Treino</GymCardNewTraining>
+                                </Dialog.Trigger>
+
+                                <NewGymTrainingModal type="training" />
+                            </Dialog.Root>
+                        </GymCardContainer>
+                    )
+                })
+            }
+
+
+
+
+
+        </div>
     )
 }

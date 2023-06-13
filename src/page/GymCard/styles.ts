@@ -11,6 +11,15 @@ export const GymCardContainer = styled.main `
     justify-content:center;
     align-items: center;
 
+    div {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
 `
 
 // interface GymCardButtonProps {
