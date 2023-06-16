@@ -1,9 +1,17 @@
 import { ReactNode, createContext, useEffect, useState } from "react"
+import { api } from "../lib/axios";
 
 interface Card {
-    title: string;
-    weekDate: string,
+    id: number;
+    cardName: string;
+    weekDay: string;
     training: Training[]
+}
+
+interface CreateCard {
+    cardName: string;
+    weekDay: string;
+    training?: Training[]
 }
 
 interface Training {
@@ -14,8 +22,19 @@ interface Training {
     weight: number;
 }
 
+interface CreateTraining {
+    name: string;
+    series: number;
+    repetitions: number;
+    weight: number;
+}
+
 interface GymCardContextType {
     cards: Card[];
+    trainings: Training[];
+    createCard: (data: CreateCard) => Promise<void>
+    updateTraining: (data: CreateTraining, cardId: number) => Promise<void>
+    
 }
 
 interface GymCardProviderProps {
@@ -24,25 +43,52 @@ interface GymCardProviderProps {
 
 export const GymCardContext = createContext({} as GymCardContextType)
 
-export function GymCardProvider({children}: GymCardProviderProps) {
+export function GymCardProvider({ children }: GymCardProviderProps) {
     const [cards, setCards] = useState<Card[]>([])
-    const [training, setTraining] = useState<Training[]>([])
-    
+    const [trainings, setTrainings] = useState<Training[]>([])
+
 
     // Obter os cards criados
-    async function LoadCards() {
-        const response = await fetch('http://localhost:3000/cards');
-        const dataCard = await response.json();
+    async function fetchCards(query?: string) {
+        const response = await api.get('/cards');
 
-        setCards(dataCard);
+        setCards(response.data);
+    }
+
+    // Criar novos Cards
+    async function createCard(data: CreateCard) {
+        const { cardName, weekDay, training } = data
+
+        const response = await api.post('/cards', {
+            cardName,
+            weekDay,
+            training
+        })
+
+        setCards((state) => [...state, response.data])
+    }
+
+    // Adicionar novos treinos
+    async function updateTraining(data: CreateTraining, cardId: number) {
+        // Obtem o registro do antigo treino pelo ID
+        const fetchCardsByID = await api.get( `/cards/${cardId}`);
+
+        // Atualiza a ficha com o novo treino
+        fetchCardsByID.data.training.push(data)
+
+        // Atualiza a ficha antiga pela nova
+        await api.patch(`/cards/${cardId}`, fetchCardsByID.data)
+
+        // Atualiza a página com a lista atualizada
+        fetchCards();
     }
 
     useEffect(() => {
-        LoadCards();
+        fetchCards();
     }, [])
 
-    return(
-        <GymCardContext.Provider value={{cards}}>
+    return (
+        <GymCardContext.Provider value={{ cards, trainings, createCard, updateTraining }}>
             {children}
         </GymCardContext.Provider>
     )

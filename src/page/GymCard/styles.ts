@@ -19,12 +19,7 @@ export const GymCardContainer = styled.main `
         align-items: center;
         gap: 1.5rem;
     }
-
 `
-
-// interface GymCardButtonProps {
-//     variant: 'delete' | 'edit' | 'image'
-// }
 
 export const GymCardTable = styled.table`
     width: 100%;
@@ -37,13 +32,11 @@ export const GymCardTable = styled.table`
         background-color: ${props => props.theme['gray-600']};
 
         &:first-child {
-        border-top-left-radius: 6px;
-        border-bottom-left-radius: 6px;
+        border-top-left-radius: 12px;
         }
 
         &:last-child {
-        border-top-right-radius: 6px;
-        border-bottom-right-radius: 6px;
+        border-top-right-radius: 12px;
         }
     }
 
@@ -83,7 +76,8 @@ export const GymCardNewTraining = styled.button `
     font-weight: bold;
 
     border: 0;
-    border-radius: 6px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 
     &:hover {
         cursor: pointer;

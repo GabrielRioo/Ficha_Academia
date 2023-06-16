@@ -5,8 +5,6 @@ export const HeaderContainer = styled.header `
     justify-content: space-around;
     align-items: center;
     
-    
-    width: 100vw;
     height: 5rem;
 
     background-color: ${props => props.theme['gray-600']};

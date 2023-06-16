@@ -30,7 +30,7 @@ export const Content = styled(Dialog.Content)`
 `
 
 interface GymModalButtonProps {
-    variant: 'green' | 'red'
+    variant: 'green' | 'red',
 }
 
 export const GymModalButton = styled.button<GymModalButtonProps>`

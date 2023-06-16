@@ -1,18 +1,18 @@
 import { GymModalInputs } from "../styles";
 
-export function CardForm() {
+export function CardForm({register}: any) {
     return (
         <GymModalInputs>
             <input
                 type="text"
-                name="card_name"
                 placeholder="Nome da Ficha"
+                {...register('cardName')}
                 required
             />
             <input
                 type="text"
-                name="week_day"
                 placeholder="Dia da semana (opcional)"
+                {...register('weekDay')}
             />
         </GymModalInputs>
     )

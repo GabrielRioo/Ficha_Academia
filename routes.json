@@ -1,0 +1,4 @@
+{
+    "/*": "/$1",
+    "/cards/:id/training": "/:id/training"
+}

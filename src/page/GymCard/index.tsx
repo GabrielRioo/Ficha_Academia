@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { GymCardButtons, GymCardContainer, GymCardNewTraining, GymCardTable } from "./styles";
 import { Image, Trash, Pencil } from 'phosphor-react'
 import { GymCardContext } from "../../contexts/GymCardContext";
-import { NewGymTrainingModal } from "../../components/NewGymTrainingModal";
+import { CustomGymModal } from "../../components/NewGymTrainingModal";
 import * as Dialog from '@radix-ui/react-dialog';
 
 export function GymCard() {
@@ -14,10 +14,10 @@ export function GymCard() {
             {
                 cards.map(card => {
                     return (
-                        <GymCardContainer>
+                        <GymCardContainer key={card.cardName}>
                             <div>
-                                <h2>{card.title}</h2>
-                                <p>{card.weekDate}</p>
+                                <h2>{card.cardName}</h2>
+                                <p>{card.weekDay}</p>
                             </div>
 
                             <GymCardTable>
@@ -35,7 +35,7 @@ export function GymCard() {
                                     {
                                         card.training.map(training => {
                                             return (
-                                                <tr key={training.id}>
+                                                <tr key={training.name}>
                                                     <td>{training.name}</td>
                                                     <td>{training.series}</td>
                                                     <td>{training.repetitions}</td>
@@ -47,7 +47,7 @@ export function GymCard() {
                                                                 <Image size={24} color="#00B37E" />
                                                             </Dialog.Trigger>
 
-                                                            <NewGymTrainingModal type="picture" />
+                                                            <CustomGymModal type="picture" card={card}/>
                                                         </Dialog.Root>
 
                                                         <Dialog.Root>
@@ -56,7 +56,7 @@ export function GymCard() {
 
                                                             </Dialog.Trigger>
 
-                                                            <NewGymTrainingModal type="edit" />
+                                                            <CustomGymModal type="edit" card={card}/>
                                                         </Dialog.Root>
 
                                                         <Dialog.Root>
@@ -66,7 +66,7 @@ export function GymCard() {
 
                                                             </Dialog.Trigger>
 
-                                                            <NewGymTrainingModal type="delete" />
+                                                            <CustomGymModal type="delete" card={card}/>
                                                         </Dialog.Root>
                                                     </GymCardButtons>
                                                 </tr>
@@ -81,7 +81,7 @@ export function GymCard() {
                                     <GymCardNewTraining >Adicionar Novo Treino</GymCardNewTraining>
                                 </Dialog.Trigger>
 
-                                <NewGymTrainingModal type="training" />
+                                <CustomGymModal type="training" card={card}/>
                             </Dialog.Root>
                         </GymCardContainer>
                     )

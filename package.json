@@ -7,14 +7,19 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve-json": "json-server server.json -d 500 -w --routes routes.json"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.1.1",
     "@radix-ui/react-dialog": "^1.0.4",
+    "axios": "^1.4.0",
     "phosphor-react": "^1.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "styled-components": "^6.0.0-rc.3"
+    "react-hook-form": "^7.44.3",
+    "styled-components": "^6.0.0-rc.3",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.12",

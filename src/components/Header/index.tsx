@@ -1,8 +1,7 @@
-import { NewGymCardModal } from "../NewGymCardModal";
 import { HeaderContainer, NewGymCardButton } from "./styles";
 import LogoImg from '../../assets/Logo.svg'
 import *  as Dialog from '@radix-ui/react-dialog'
-import { NewGymTrainingModal } from "../NewGymTrainingModal";
+import { CustomGymModal } from "../NewGymTrainingModal";
 
 export function Header() {
     return (
@@ -14,7 +13,7 @@ export function Header() {
                     <NewGymCardButton> Nova Ficha </NewGymCardButton>
                 </Dialog.Trigger>
 
-                <NewGymTrainingModal type="card" />
+                <CustomGymModal type="card" />
             </Dialog.Root>
 
         </HeaderContainer>

@@ -1,30 +1,30 @@
 import { GymModalInputs } from "../styles";
 
-export function TrainingForm() {
+export function TrainingForm({ register }: any) {
     return (
         <GymModalInputs>
             <input
                 type="text"
-                name="name"
                 placeholder="Nome do Exercício"
+                {...register('name')}
                 required
             />
             <input
                 type="number"
-                name="series"
                 placeholder="Quantidade de séries"
+                {...register('series', { valueAsNumber: true })}
                 required
             />
             <input
                 type="number"
-                name="repetitions"
                 placeholder="Quantidade de repetições"
+                {...register('repetitions', { valueAsNumber: true })}
                 required
             />
             <input
                 type="number"
                 placeholder="Peso da carga (opicional)"
-                name="weight"
+                {...register('weight', { valueAsNumber: true })}
             />
         </GymModalInputs>
     )
