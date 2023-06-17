@@ -6,8 +6,7 @@ import { CustomGymModal } from "../../components/NewGymTrainingModal";
 import * as Dialog from '@radix-ui/react-dialog';
 
 export function GymCard() {
-    const { cards } = useContext(GymCardContext)
-
+    const { cards, deleteCard } = useContext(GymCardContext)
 
     return (
         <div>
@@ -16,8 +15,36 @@ export function GymCard() {
                     return (
                         <GymCardContainer key={card.cardName}>
                             <div>
-                                <h2>{card.cardName}</h2>
-                                <p>{card.weekDay}</p>
+                                <div>
+                                    <h2>{card.cardName}</h2>
+
+                                    <Dialog.Root>
+                                        <Dialog.Trigger asChild>
+                                            <Pencil size={24} color="#1D8DD3" />
+                                        </Dialog.Trigger>
+
+                                        <CustomGymModal type="editCard" card={card} />
+                                    </Dialog.Root>
+
+                                    <Dialog.Root>
+                                        <Dialog.Trigger asChild>
+                                            <Trash size={24} color="#F75A68" />
+                                        </Dialog.Trigger>
+
+                                        <CustomGymModal type="deleteCard" card={card} />
+                                    </Dialog.Root>
+                                </div>
+
+
+                                <p>
+                                    {card.weekDay === '0' && 'Segunda-feira'}
+                                    {card.weekDay === '1' && 'Terça-feira'}
+                                    {card.weekDay === '2' && 'Quarta-feira'}
+                                    {card.weekDay === '3' && 'Quinta-feira'}
+                                    {card.weekDay === '4' && 'Sexta-feira'}
+                                    {card.weekDay === '5' && 'Sábado'}
+                                    {card.weekDay === '6' && 'Domingo'}
+                                </p>
                             </div>
 
                             <GymCardTable>
@@ -47,26 +74,26 @@ export function GymCard() {
                                                                 <Image size={24} color="#00B37E" />
                                                             </Dialog.Trigger>
 
-                                                            <CustomGymModal type="picture" card={card}/>
+                                                            <CustomGymModal type="picture" card={card} />
                                                         </Dialog.Root>
 
                                                         <Dialog.Root>
                                                             <Dialog.Trigger asChild>
-                                                            <Pencil size={24} color="#1D8DD3" />
+                                                                <Pencil size={24} color="#1D8DD3" />
 
                                                             </Dialog.Trigger>
 
-                                                            <CustomGymModal type="edit" card={card}/>
+                                                            <CustomGymModal type="edit" card={card} />
                                                         </Dialog.Root>
 
                                                         <Dialog.Root>
                                                             <Dialog.Trigger asChild>
-                                                            <Trash size={24} color="#F75A68" />
+                                                                <Trash size={24} color="#F75A68" />
 
 
                                                             </Dialog.Trigger>
 
-                                                            <CustomGymModal type="delete" card={card}/>
+                                                            <CustomGymModal type="delete" card={card} />
                                                         </Dialog.Root>
                                                     </GymCardButtons>
                                                 </tr>
@@ -81,7 +108,7 @@ export function GymCard() {
                                     <GymCardNewTraining >Adicionar Novo Treino</GymCardNewTraining>
                                 </Dialog.Trigger>
 
-                                <CustomGymModal type="training" card={card}/>
+                                <CustomGymModal type="training" card={card} />
                             </Dialog.Root>
                         </GymCardContainer>
                     )

@@ -23,6 +23,7 @@ interface Training {
 }
 
 interface CreateTraining {
+    id?: number;
     name: string;
     series: number;
     repetitions: number;
@@ -33,7 +34,9 @@ interface GymCardContextType {
     cards: Card[];
     trainings: Training[];
     createCard: (data: CreateCard) => Promise<void>
-    updateTraining: (data: CreateTraining, cardId: number) => Promise<void>
+    deleteCard: (cardId: number) => Promise<void>
+    updateCard: (data: CreateCard, cardId: number) => Promise<void>
+    addNewTraining: (data: CreateTraining, cardId: number) => Promise<void>
     
 }
 
@@ -50,7 +53,12 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
 
     // Obter os cards criados
     async function fetchCards(query?: string) {
-        const response = await api.get('/cards');
+        const response = await api.get('/cards', {
+            params: {
+                _sort: 'weekDay',
+                _order: 'asc'
+            }
+        });
 
         setCards(response.data);
     }
@@ -66,14 +74,32 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
         })
 
         setCards((state) => [...state, response.data])
+
+        // Atualiza a página com a lista atualizada
+        fetchCards();
+    }
+
+    async function deleteCard(cardId: number) {
+        const response = await api.delete(`/cards/${cardId}`)
+
+        // Atualiza a página com a lista atualizada
+        fetchCards();
+    }
+
+    async function updateCard(data: CreateCard, cardId: number) {
+        const response = await api.patch(`/cards/${cardId}`, data)
+
+        // Atualiza a página com a lista atualizada
+        fetchCards();
     }
 
     // Adicionar novos treinos
-    async function updateTraining(data: CreateTraining, cardId: number) {
+    async function addNewTraining(data: CreateTraining, cardId: number) {
         // Obtem o registro do antigo treino pelo ID
         const fetchCardsByID = await api.get( `/cards/${cardId}`);
-
+        
         // Atualiza a ficha com o novo treino
+        data.id = fetchCardsByID.data.training.length + 1;
         fetchCardsByID.data.training.push(data)
 
         // Atualiza a ficha antiga pela nova
@@ -88,7 +114,7 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
     }, [])
 
     return (
-        <GymCardContext.Provider value={{ cards, trainings, createCard, updateTraining }}>
+        <GymCardContext.Provider value={{ cards, trainings, createCard, updateCard, deleteCard, addNewTraining }}>
             {children}
         </GymCardContext.Provider>
     )

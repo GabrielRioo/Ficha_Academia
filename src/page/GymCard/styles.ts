@@ -12,12 +12,29 @@ export const GymCardContainer = styled.main `
     align-items: center;
 
     div {
-        width: 100%;
+        width: calc(100% - 1.8rem);
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        gap: 1.5rem;
+        gap: .4rem;
+        margin-left: 6rem;
+
+        p {
+            background-color: ${props => props.theme['gray-500']};
+            padding: .2rem .8rem;
+            border-radius: 12px;
+            font-size: .7rem;
+            margin: 0 2rem;
+            width: 9rem;
+            text-align: center;
+        }
+
+        svg:hover{
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity .2s
+        }
     }
 `
 

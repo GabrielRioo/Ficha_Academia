@@ -5,8 +5,7 @@ import { X } from "phosphor-react";
 import { CloseButton, Content, GymModalButton, GymModalInputs, Overlay } from "./styles";
 import { CardForm } from "./CardForm";
 import { TrainingForm } from "./TrainingForm";
-import { DeleteForm } from "./DeleteForm";
-import { EditForm } from "./EditForm";
+import { EditCardForm } from "./EditForm/Card";
 import { PictureForm } from "./PictureForm";
 import { useForm } from 'react-hook-form'
 import { useContext, useState } from "react";
@@ -28,7 +27,7 @@ interface Training {
 }
 
 interface NewGymProps {
-    type: 'card' | 'training' | 'picture' | 'edit' | 'delete',
+    type: 'card' | 'training' | 'picture' | 'edit' | 'editCard' | 'delete'| 'deleteCard',
     card?: Card
 }
 
@@ -49,9 +48,7 @@ type NewTrainingFormInputs = z.infer<typeof newTrainingFormSchema>
 
 
 export function CustomGymModal(props: NewGymProps) {
-    const { cards, createCard, updateTraining } = useContext(GymCardContext)
-    // const [ training, setTraining] = useState({})
-    const [ submitForm, setSubmitForm] = useState('')
+    const { createCard, updateCard, deleteCard, addNewTraining } = useContext(GymCardContext)
 
     const { 
         handleSubmit,
@@ -67,6 +64,12 @@ export function CustomGymModal(props: NewGymProps) {
         if(modalType === 'card') {
             handleCreateNewCard(data)
         } 
+        if (modalType === 'deleteCard') {
+            handleDeleteCard()
+        }
+        if (modalType === 'editCard') {
+            handleUpdateCard(data)
+        }
         if (modalType === 'training') {
             handleCreateNewTraining(data)
         }
@@ -74,11 +77,8 @@ export function CustomGymModal(props: NewGymProps) {
 
     // Criar um novo Card (ficha)
     async function handleCreateNewCard(data: NewCardFormInputs) {
-        console.log(data)
-
         const { cardName, weekDay, training } = data
-        console.log(data)
-
+        
         createCard({
             cardName,
             weekDay,
@@ -90,31 +90,33 @@ export function CustomGymModal(props: NewGymProps) {
 
     // Criar um novo Treino (ficha)
     async function handleCreateNewTraining(data: NewTrainingFormInputs) {
-        let cardID = 0
-        if (props.card?.id !== undefined) {
-            cardID = props.card?.id
-        }
-        console.log(props.card?.id)
-        console.log(data)
         const { name, series, repetitions, weight } = data
-        // setTraining(data);
 
-        updateTraining({
+        let cardID = 0
+        if (props.card?.id !== undefined) cardID = props.card?.id
+
+        addNewTraining({
             name,
             series,
             repetitions,
             weight,
         }, cardID )
 
-        // const { cardName, weekDay, training } = data
-
-        // updateTraining({
-        //     cardName,          
-        //     weekDay,
-        //     training,
-        // })
-
         reset();
+    }
+
+    async function handleDeleteCard() {
+        let cardID = 0
+        if (props.card?.id !== undefined) cardID = props.card?.id
+
+        deleteCard(cardID)
+    }
+
+    async function handleUpdateCard(data: NewCardFormInputs) {
+        let cardID = 0
+        if (props.card?.id !== undefined) cardID = props.card?.id
+
+        updateCard(data, cardID)
     }
 
     return (
@@ -125,10 +127,13 @@ export function CustomGymModal(props: NewGymProps) {
                 <Dialog.Title>
                     { modalType === 'card' && 'Nova Ficha' }
                     { modalType === 'training' && 'Novo Treino' }
+                    { modalType === 'deleteCard' && `Tem certeza que deseja excluir?` }
                     { modalType === 'delete' && `Tem certeza que deseja excluir?` }
+                    { modalType === 'editCard' && 'Edite sua Ficha' }
                     { modalType === 'edit' && 'Edite seu Treino' }
                     { modalType === 'picture' && 'Como fazer o exercício' }
                 </Dialog.Title>
+                <p>{ modalType === 'deleteCard' && `Após expcluir não será possivel recupera-lo` }</p>
                 <CloseButton>
                     <X size={24} />
                 </CloseButton>
@@ -146,24 +151,23 @@ export function CustomGymModal(props: NewGymProps) {
                         <div>
                             <TrainingForm register={register} /> 
                             <GymModalButton type="submit"  variant="green" >Adicionar</GymModalButton>
-
                         </div>
                     }
-                    {/* { 
-                        modalType === 'delete' && 
+                    { 
+                        modalType === 'deleteCard' && 
                         <div>
-                            <GymModalButton variant="red" type="submit" disabled>Excluir</GymModalButton>
+                            <GymModalButton variant="red" type="submit" >Excluir</GymModalButton>
                             <GymModalButton variant="green" type="submit" disabled>Não excluir</GymModalButton>
                         </div>
                     }
                     { 
-                        modalType === 'edit' && 
+                        modalType === 'editCard' && 
                         <div>
-                            <EditForm /> 
-                            <GymModalButton variant="green" type="submit" disabled>Salvar</GymModalButton>
+                            <EditCardForm register={register} valuesToChange={props.card}/> 
+                            <GymModalButton variant="green" type="submit">Salvar</GymModalButton>
                         </div>
                     }
-                    { 
+                    {/* { 
                         modalType === 'picture' && 
                         <div>
                             <PictureForm /> 

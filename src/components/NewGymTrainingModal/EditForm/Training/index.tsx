@@ -1,6 +1,6 @@
-import { GymModalInputs } from "../styles"
+import { GymModalInputs } from "../../styles"
 
-export function EditForm() {
+export function EditTrainingForm() {
     return (
         <GymModalInputs>
               <input

@@ -1,58 +1,31 @@
 {
   "cards": [
     {
-      "id": 1,
-      "cardName": "Treino de Bicepsss",
-      "weekDay": "quinta-feira",
-      "training": [
-        {
-          "name": "Supino Inclinadoo",
-          "series": 3,
-          "repetitions": 3,
-          "weight": 10,
-          "createdAt": "2023-06-10T23:36:32.746Z"
-        },
-        {
-          "name": "Gabriel Paiva Rio",
-          "series": 1,
-          "repetitions": 2,
-          "weight": 3
-        },
-        {
-          "name": "Gabriel Paiva Rio 2",
-          "series": 1,
-          "repetitions": 2,
-          "weight": 3
-        }
-      ]
-    },
-    {
-      "id": 2,
       "cardName": "Treino de Peito",
-      "weekDay": "Terça-feira",
+      "weekDay": "1",
       "training": [
         {
-          "id": 3,
           "name": "Supino Inclinado",
           "series": 3,
           "repetitions": 3,
           "weight": 10,
-          "createdAt": "2023-06-11T23:36:32.746Z"
-        }
-      ]
-    },
-    {
-      "cardName": "Treino Pernas",
-      "weekDay": "Quinta-feira",
-      "training": [
+          "id": 1
+        },
         {
-          "name": "Sumo",
-          "series": 1,
-          "repetitions": 2,
-          "weight": 3
+          "name": "Supino Reto",
+          "series": 3,
+          "repetitions": 3,
+          "weight": 10,
+          "id": 2
         }
       ],
-      "id": 3
+      "id": 1
+    },
+    {
+      "cardName": "Treino de Pernas",
+      "weekDay": "1",
+      "training": [],
+      "id": 2
     }
   ]
 }
