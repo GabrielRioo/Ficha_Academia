@@ -5,18 +5,18 @@
       "weekDay": "1",
       "training": [
         {
-          "name": "Supino Inclinado",
-          "series": 3,
-          "repetitions": 3,
-          "weight": 10,
-          "id": 1
+          "name": "Gabriel Paiva Rio",
+          "series": 1,
+          "repetitions": 2,
+          "weight": 3,
+          "id": 2
         },
         {
-          "name": "Supino Reto",
+          "name": "Alteres",
           "series": 3,
           "repetitions": 3,
-          "weight": 10,
-          "id": 2
+          "weight": 3,
+          "id": 1
         }
       ],
       "id": 1

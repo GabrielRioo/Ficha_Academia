@@ -60,6 +60,17 @@ export const GymModalInputs = styled.div`
     flex-direction: column;
     gap: .8rem;
 
+    label {
+        color: ${props => props.theme['gray-300']};
+        font-size: 1rem;
+        margin-left: .5rem;
+        margin-bottom: -0.4rem;
+    }
+
+    input + label {
+        margin-top: .5rem;
+    }
+
     input,select {
         border: 0;
         border-radius: 6px;

@@ -1,11 +1,13 @@
 import { GymModalInputs } from "../../styles"
 
-export function EditCardForm({ register }: any) {
+export function EditCardForm({ register, valuesToChange }: any) {
+    console.log(valuesToChange)
     return (
         <GymModalInputs>
             <input
                 type="text"
                 placeholder="Nome da Ficha"
+                value={valuesToChange.cardName}
                 {...register('cardName')}
                 required
             />

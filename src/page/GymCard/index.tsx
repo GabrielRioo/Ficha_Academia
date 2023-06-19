@@ -83,7 +83,7 @@ export function GymCard() {
 
                                                             </Dialog.Trigger>
 
-                                                            <CustomGymModal type="edit" card={card} />
+                                                            <CustomGymModal type="editTraining" card={card} training={training} />
                                                         </Dialog.Root>
 
                                                         <Dialog.Root>
@@ -93,7 +93,7 @@ export function GymCard() {
 
                                                             </Dialog.Trigger>
 
-                                                            <CustomGymModal type="delete" card={card} />
+                                                            <CustomGymModal type="deleteTraining" card={card} training={training} />
                                                         </Dialog.Root>
                                                     </GymCardButtons>
                                                 </tr>
