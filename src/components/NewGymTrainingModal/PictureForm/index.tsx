@@ -2,22 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { GymModalInputs } from '../styles';
 import { GymCardContext } from '../../../contexts/GymCardContext';
 
-interface Card {
-    id: number;
-    cardName: string;
-    weekDay: string;
-    training: Training[]
-}
-
-interface Training {
-    id: number;
-    name: string;
-    series: number;
-    repetitions: number;
-    weight: number;
-    image?: string;
-}
-
 interface ImageUploaderProps {
     onImageUpload: (imageData: string) => void;
     cardId: number,
@@ -49,7 +33,6 @@ export const converterParaBase64 = (
 export const PictureForm: React.FC<ImageUploaderProps> = ({ onImageUpload, cardId, trainingId, trainingImage }) => {
     const { updatePicture } = useContext(GymCardContext)
     // const [selectedImage, setSelectedImage] = useState<File | null>(null);
-    const [haveImage, setHaveImage ] = useState(false)
     const [base64Image, setBase64Image] = useState('');
 
     useEffect(() => {

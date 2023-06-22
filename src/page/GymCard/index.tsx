@@ -6,7 +6,7 @@ import { CustomGymModal } from "../../components/NewGymTrainingModal";
 import * as Dialog from '@radix-ui/react-dialog';
 
 export function GymCard() {
-    const { cards, deleteCard } = useContext(GymCardContext)
+    const { cards } = useContext(GymCardContext)
 
     return (
         <div>

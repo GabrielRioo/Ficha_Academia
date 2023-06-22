@@ -1,10 +1,6 @@
-import { useState } from "react"
 import { GymModalInputs } from "../../styles"
 
 export function EditTrainingForm({ register, valuesToChange }: any) {
-    const [trainingName, setTrainingName] = useState('')
-    // setTrainingName(valuesToChange.name)
-
     console.log(valuesToChange)
     return (
         <GymModalInputs>

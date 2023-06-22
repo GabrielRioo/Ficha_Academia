@@ -34,12 +34,12 @@ interface CreateTraining {
 
 interface GymCardContextType {
     cards: Card[];
-    trainings: Training[];
+    // trainings: Training[];
     createCard: (data: CreateCard) => Promise<void>
     deleteCard: (cardId: number) => Promise<void>
     updateCard: (data: CreateCard, cardId: number) => Promise<void>
     addNewTraining: (data: CreateTraining, cardId: number) => Promise<void>
-    deleteTraining: (data: CreateTraining, trainingId: number, cardId: number) => Promise<void>
+    deleteTraining: (trainingId: number, cardId: number) => Promise<void>
     updateTraining: (data: CreateTraining, trainingId: number, cardId: number, imageBase64: string) => Promise<void>
     updatePicture: ( trainingId: number, cardId: number, imageBase64: string) => Promise<void>
 }
@@ -52,11 +52,12 @@ export const GymCardContext = createContext({} as GymCardContextType)
 
 export function GymCardProvider({ children }: GymCardProviderProps) {
     const [cards, setCards] = useState<Card[]>([])
-    const [trainings, setTrainings] = useState<Training[]>([])
+    // const [trainings, setTrainings] = useState<Training[]>([])
+    // Training[] trainings = Training[]
 
 
     // Obter os cards criados
-    async function fetchCards(query?: string) {
+    async function fetchCards() {
         const response = await api.get('/cards', {
             params: {
                 _sort: 'weekDay',
@@ -84,14 +85,14 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
     }
 
     async function deleteCard(cardId: number) {
-        const response = await api.delete(`/cards/${cardId}`)
+        await api.delete(`/cards/${cardId}`)
 
         // Atualiza a página com a lista atualizada
         fetchCards();
     }
 
     async function updateCard(data: CreateCard, cardId: number) {
-        const response = await api.patch(`/cards/${cardId}`, data)
+        await api.patch(`/cards/${cardId}`, data)
 
         // Atualiza a página com a lista atualizada
         fetchCards();
@@ -115,12 +116,12 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
     }
 
     // Adicionar novos treinos
-    async function deleteTraining(data: CreateTraining, trainingId: number, cardId: number) {
+    async function deleteTraining(trainingId: number, cardId: number) {
         // Obtem o registro do antigo treino pelo ID
         const fetchCardsByID = await api.get( `/cards/${cardId}`);
 
         // Buscar o treino pelo ID
-        let removeTraining = fetchCardsByID.data.training.filter(training => training.id !== trainingId)
+        let removeTraining = fetchCardsByID.data.training.filter((training: any) => training.id !== trainingId)
         fetchCardsByID.data.training = removeTraining;
 
         // Atualiza a ficha antiga pela nova
@@ -136,11 +137,11 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
         const fetchCardsByID = await api.get( `/cards/${cardId}`);
 
         // Removendo o treino que esta sendo editado da lita de treino
-        let oldTrainingWithoutTheEdit = fetchCardsByID.data.training.filter(training => training.id !== trainingId)
+        let oldTrainingWithoutTheEdit = fetchCardsByID.data.training.filter((training: any) => training.id !== trainingId)
         fetchCardsByID.data.training = oldTrainingWithoutTheEdit;
         
         // Adicionando o novo treino editado a lista de treinos
-        let updatingTraining = fetchCardsByID.data.training.filter(training => training.id === trainingId)
+        let updatingTraining = fetchCardsByID.data.training.filter((training: any) => training.id === trainingId)
         data.image = image;
         data.id = trainingId;
         updatingTraining = data
@@ -160,12 +161,12 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
         const fetchCardsByID = await api.get( `/cards/${cardId}`);
         console.log('inicial: ',fetchCardsByID.data)
 
-        let getCurrentTraining = fetchCardsByID.data.training.filter(training => training.id === trainingId)
+        let getCurrentTraining = fetchCardsByID.data.training.filter((training: any) => training.id === trainingId)
         console.log('current: ', getCurrentTraining)
         getCurrentTraining[0].image = imageBase64
 
         // // Removendo o treino que esta sendo editado da lita de treino
-        let oldTrainingWithoutTheEdit = fetchCardsByID.data.training.filter(training => training.id !== trainingId)
+        let oldTrainingWithoutTheEdit = fetchCardsByID.data.training.filter((training: any) => training.id !== trainingId)
         fetchCardsByID.data.training = oldTrainingWithoutTheEdit;
         fetchCardsByID.data.training.push(getCurrentTraining[0])
 
@@ -181,7 +182,7 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
     }, [])
 
     return (
-        <GymCardContext.Provider value={{ cards, trainings, createCard, updateCard, deleteCard, addNewTraining, deleteTraining, updateTraining, updatePicture }}>
+        <GymCardContext.Provider value={{ cards, createCard, updateCard, deleteCard, addNewTraining, deleteTraining, updateTraining, updatePicture }}>
             {children}
         </GymCardContext.Provider>
     )

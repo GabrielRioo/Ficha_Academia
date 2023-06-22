@@ -1,8 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import * as z from "zod";
-import { zodResolver } from '@hookform/resolvers/zod'
 import { X } from "phosphor-react";
-import { CloseButton, Content, GymModalButton, GymModalInputs, Overlay } from "./styles";
+import { CloseButton, Content, GymModalButton, Overlay } from "./styles";
 import { CardForm } from "./CardForm";
 import { TrainingForm } from "./TrainingForm";
 import { EditCardForm } from "./EditForm/Card";
@@ -79,7 +78,7 @@ export function CustomGymModal(props: NewGymProps) {
             handleCreateNewTraining(data)
         }
         if (modalType === 'deleteTraining') {
-            handleDeleteTraining(data)
+            handleDeleteTraining()
         }
         if (modalType === 'editTraining') {
             handleUpdateTraining(data)
@@ -88,7 +87,7 @@ export function CustomGymModal(props: NewGymProps) {
 
     // Criar um novo Card (ficha)
     async function handleCreateNewCard(data: NewCardFormInputs) {
-        const { cardName, weekDay, training } = data
+        const { cardName, weekDay } = data
 
         createCard({
             cardName,
@@ -116,19 +115,12 @@ export function CustomGymModal(props: NewGymProps) {
         reset();
     }
 
-    async function handleDeleteTraining(data: NewTrainingFormInputs) {
-        const { name, series, repetitions, weight } = data
-
+    async function handleDeleteTraining() {
         let cardID = props.card?.id!
         let trainingID = props.training?.id!
         // if (props.card?.id !== undefined) cardID = props.card?.id
 
-        deleteTraining({
-            name,
-            series,
-            repetitions,
-            weight,
-        }, trainingID, cardID)
+        deleteTraining(trainingID, cardID)
     }
 
     async function handleUpdateTraining(data: NewTrainingFormInputs) {
@@ -163,6 +155,7 @@ export function CustomGymModal(props: NewGymProps) {
 
     const handleImageUpload = (imageData: string) => {
         setJsonObject({ image: imageData });
+        console.log(jsonObject)
       };
 
     return (
