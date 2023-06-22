@@ -70,7 +70,7 @@ export const PictureForm: React.FC<ImageUploaderProps> = ({ onImageUpload, cardI
 
     return (
         <GymModalInputs>
-            <input type="file" accept="image/*" onChange={handleImageUpload} />
+            <input type="file" accept="image/*" onChange={handleImageUpload} disabled/>
             {base64Image !== "" && <img src={base64Image} alt="Uploaded" />}
         </GymModalInputs>
     );

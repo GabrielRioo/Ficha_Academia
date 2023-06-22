@@ -224,7 +224,8 @@ export function CustomGymModal(props: NewGymProps) {
                         modalType === 'picture' &&
                         <div>
                             <PictureForm onImageUpload={handleImageUpload} cardId={props.card?.id!} trainingId={props.training?.id!} trainingImage={props.training?.image!}/>
-                            <GymModalButton variant="green" type="submit" >Salvar</GymModalButton>
+                            <p style={{color: 'red', textAlign: 'center', marginTop: '1rem'}}>Função ainda não disponível.</p>
+                            <GymModalButton variant="green" type="submit" disabled>Salvar</GymModalButton>
                         </div>
                     }
 

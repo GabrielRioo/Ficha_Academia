@@ -5,6 +5,22 @@ import { GymCardContext } from "../../contexts/GymCardContext";
 import { CustomGymModal } from "../../components/NewGymTrainingModal";
 import * as Dialog from '@radix-ui/react-dialog';
 
+// interface Card {
+//     id: number;
+//     cardName: string;
+//     weekDay: string;
+//     training: Training[]
+// }
+
+// interface Training {
+//     id: number;
+//     name: string;
+//     series: number;
+//     repetitions: number;
+//     weight: number;
+//     image?: string;
+// }
+
 export function GymCard() {
     const { cards } = useContext(GymCardContext)
 

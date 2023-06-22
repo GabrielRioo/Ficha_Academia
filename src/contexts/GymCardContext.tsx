@@ -9,6 +9,7 @@ interface Card {
 }
 
 interface CreateCard {
+    id?: string;
     cardName: string;
     weekDay: string;
     training?: Training[]
@@ -58,41 +59,82 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
 
     // Obter os cards criados
     async function fetchCards() {
-        const response = await api.get('/cards', {
-            params: {
-                _sort: 'weekDay',
-                _order: 'asc'
-            }
-        });
+        let localStorageResponse = ''
+        if (localStorage.getItem('cards') !== null) {
+            localStorageResponse = localStorage.getItem('cards')!;
+            setCards(JSON.parse(localStorageResponse));
+        }
 
-        setCards(response.data);
+
+        // const response = await api.get('/cards', {
+        //     params: {
+        //         _sort: 'weekDay',
+        //         _order: 'asc'
+        //     }
+        // });
+
     }
 
     // Criar novos Cards
     async function createCard(data: CreateCard) {
-        const { cardName, weekDay, training } = data
+        // using local storage to persist data
+        const getLocalStorage = localStorage.getItem('cards')
+        if (getLocalStorage !== null) {
+            let updateLocalStorage = JSON.parse(getLocalStorage);
+            data.id = updateLocalStorage.length + 1;
+            updateLocalStorage.push(data)
 
-        const response = await api.post('/cards', {
-            cardName,
-            weekDay,
-            training
-        })
+            localStorage.setItem('cards', JSON.stringify(updateLocalStorage))
+        }
+        else {
+            data.id = '1';
+            localStorage.setItem('cards', JSON.stringify([data]))
+        }
 
-        setCards((state) => [...state, response.data])
+        // using API's to persist data 
+        // const { cardName, weekDay, training } = data
+        
+        // const response = await api.post('/cards', {
+        //     cardName,
+        //     weekDay,
+        //     training
+        // })
+
+        // setCards((state) => [...state, response.data])
 
         // Atualiza a página com a lista atualizada
         fetchCards();
     }
 
     async function deleteCard(cardId: number) {
-        await api.delete(`/cards/${cardId}`)
+        // using local storage to persist data
+        let getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
+        const removingCardByID = getLocalStorage.filter((card: any) => card.id !== cardId)
+
+        localStorage.setItem('cards', JSON.stringify(removingCardByID))
+        
+        // using API's to persist data 
+        // await api.delete(`/cards/${cardId}`)
 
         // Atualiza a página com a lista atualizada
         fetchCards();
     }
 
     async function updateCard(data: CreateCard, cardId: number) {
-        await api.patch(`/cards/${cardId}`, data)
+        // using local storage to persist data
+        let getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
+
+        let getCardByID = getLocalStorage.filter((card: any) => card.id === cardId)
+        getCardByID[0].cardName = data.cardName;
+        getCardByID[0].weekDay = data.weekDay
+
+        let newCard = getLocalStorage.filter((card: any) => card.id !== cardId)
+        newCard.push(getCardByID[0])
+
+        localStorage.setItem('cards', JSON.stringify(newCard))
+
+        // using API's to persist data 
+        // await api.patch(`/cards/${cardId}`, data)
 
         // Atualiza a página com a lista atualizada
         fetchCards();
@@ -100,16 +142,30 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
 
     // Adicionar novos treinos
     async function addNewTraining(data: CreateTraining, cardId: number) {
-        // Obtem o registro do antigo treino pelo ID
-        const fetchCardsByID = await api.get( `/cards/${cardId}`);
-        
-        // Atualiza a ficha com o novo treino
-        data.id = fetchCardsByID.data.training.length + 1;
-        data.image = ""
-        fetchCardsByID.data.training.push(data)
+        // using local storage to persist data
+        let getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
+        let getCardByID = getLocalStorage.filter((card: any) => card.id === cardId)
+        data.id = getCardByID[0].training.length + 1;
+        data.image = "";
 
-        // Atualiza a ficha antiga pela nova
-        await api.patch(`/cards/${cardId}`, fetchCardsByID.data)
+        getCardByID[0].training.push(data)
+
+        let removingOldCardByID = getLocalStorage.filter((card: any) => card.id !== cardId)
+        removingOldCardByID.push(getCardByID[0])
+
+        localStorage.setItem('cards', JSON.stringify(removingOldCardByID))
+        
+        // using API's to persist data
+        // Obtem o registro do antigo treino pelo ID
+        // const fetchCardsByID = await api.get( `/cards/${cardId}`);
+        
+        // // Atualiza a ficha com o novo treino
+        // data.id = fetchCardsByID.data.training.length + 1;
+        // data.image = ""
+        // fetchCardsByID.data.training.push(data)
+
+        // // Atualiza a ficha antiga pela nova
+        // await api.patch(`/cards/${cardId}`, fetchCardsByID.data)
 
         // Atualiza a página com a lista atualizada
         fetchCards();
@@ -117,15 +173,33 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
 
     // Adicionar novos treinos
     async function deleteTraining(trainingId: number, cardId: number) {
+        let getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
+
+        //obtem o Card pelo ID
+        let getCardByID = getLocalStorage.filter((card: any) => card.id === cardId)
+
+        // Obtem todos o treinos, exceto o que esta sendo deletado
+        let currentTrainings = getCardByID[0].training.filter((training: any) => training.id !== trainingId)
+        getCardByID[0].training = currentTrainings
+
+        // remove o card antigo
+        let removeOldCardByID = getLocalStorage.filter((card: any) => card.id !== cardId)
+
+        // adiciona o card atualizado
+        removeOldCardByID.push(getCardByID[0])
+
+        localStorage.setItem('cards', JSON.stringify(removeOldCardByID))
+
+        // using API's to persist data
         // Obtem o registro do antigo treino pelo ID
-        const fetchCardsByID = await api.get( `/cards/${cardId}`);
+        // const fetchCardsByID = await api.get( `/cards/${cardId}`);
 
-        // Buscar o treino pelo ID
-        let removeTraining = fetchCardsByID.data.training.filter((training: any) => training.id !== trainingId)
-        fetchCardsByID.data.training = removeTraining;
+        // // Buscar o treino pelo ID
+        // let removeTraining = fetchCardsByID.data.training.filter((training: any) => training.id !== trainingId)
+        // fetchCardsByID.data.training = removeTraining;
 
-        // Atualiza a ficha antiga pela nova
-        await api.patch(`/cards/${cardId}`, fetchCardsByID.data)
+        // // Atualiza a ficha antiga pela nova
+        // await api.patch(`/cards/${cardId}`, fetchCardsByID.data)
 
         // Atualiza a página com a lista atualizada
         fetchCards();
@@ -133,24 +207,47 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
 
     // Adicionar novos treinos
     async function updateTraining(data: CreateTraining, trainingId: number, cardId: number, image: string) {
-        // Obtem o registro do antigo treino pelo ID
-        const fetchCardsByID = await api.get( `/cards/${cardId}`);
+        let getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
 
-        // Removendo o treino que esta sendo editado da lita de treino
-        let oldTrainingWithoutTheEdit = fetchCardsByID.data.training.filter((training: any) => training.id !== trainingId)
-        fetchCardsByID.data.training = oldTrainingWithoutTheEdit;
-        
+        //obtem o Card pelo ID
+        let getCardByID = getLocalStorage.filter((card: any) => card.id === cardId)
+
+        // Obtem todos o treinos, exceto o que esta sendo deletado
+        let currentTrainings = getCardByID[0].training.filter((training: any) => training.id !== trainingId)
+        getCardByID[0].training = currentTrainings;
+
         // Adicionando o novo treino editado a lista de treinos
-        let updatingTraining = fetchCardsByID.data.training.filter((training: any) => training.id === trainingId)
         data.image = image;
         data.id = trainingId;
-        updatingTraining = data
+        getCardByID[0].training.push(data)
 
-        // console.log('oldCard: ', fetchCardsByID.data.training)
-        fetchCardsByID.data.training.push(updatingTraining);
+        // remove o card antigo
+        let removeOldCardByID = getLocalStorage.filter((card: any) => card.id !== cardId)
 
-        // Atualiza a ficha antiga pela nova
-        await api.patch(`/cards/${cardId}`, fetchCardsByID.data)
+        // adiciona o card atualizado
+        removeOldCardByID.push(getCardByID[0])
+
+        localStorage.setItem('cards', JSON.stringify(removeOldCardByID))
+
+        // using API's to persist data
+        // Obtem o registro do antigo treino pelo ID
+        // const fetchCardsByID = await api.get( `/cards/${cardId}`);
+
+        // // Removendo o treino que esta sendo editado da lita de treino
+        // let oldTrainingWithoutTheEdit = fetchCardsByID.data.training.filter((training: any) => training.id !== trainingId)
+        // fetchCardsByID.data.training = oldTrainingWithoutTheEdit;
+        
+        // // Adicionando o novo treino editado a lista de treinos
+        // let updatingTraining = fetchCardsByID.data.training.filter((training: any) => training.id === trainingId)
+        // data.image = image;
+        // data.id = trainingId;
+        // updatingTraining = data
+
+        // // console.log('oldCard: ', fetchCardsByID.data.training)
+        // fetchCardsByID.data.training.push(updatingTraining);
+
+        // // Atualiza a ficha antiga pela nova
+        // await api.patch(`/cards/${cardId}`, fetchCardsByID.data)
 
         // Atualiza a página com a lista atualizada
         fetchCards();
