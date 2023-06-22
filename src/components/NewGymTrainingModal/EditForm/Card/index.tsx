@@ -7,7 +7,7 @@ export function EditCardForm({ register, valuesToChange }: any) {
             <input
                 type="text"
                 placeholder="Nome da Ficha"
-                value={valuesToChange.cardName}
+                // value={valuesToChange.cardName}
                 {...register('cardName')}
                 required
             />

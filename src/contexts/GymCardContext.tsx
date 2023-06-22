@@ -20,6 +20,7 @@ interface Training {
     series: number;
     repetitions: number;
     weight: number;
+    image?: string;
 }
 
 interface CreateTraining {
@@ -28,6 +29,7 @@ interface CreateTraining {
     series: number;
     repetitions: number;
     weight: number;
+    image?: string;
 }
 
 interface GymCardContextType {
@@ -38,7 +40,8 @@ interface GymCardContextType {
     updateCard: (data: CreateCard, cardId: number) => Promise<void>
     addNewTraining: (data: CreateTraining, cardId: number) => Promise<void>
     deleteTraining: (data: CreateTraining, trainingId: number, cardId: number) => Promise<void>
-    updateTraining: (data: CreateTraining, trainingId: number, cardId: number) => Promise<void>
+    updateTraining: (data: CreateTraining, trainingId: number, cardId: number, imageBase64: string) => Promise<void>
+    updatePicture: ( trainingId: number, cardId: number, imageBase64: string) => Promise<void>
 }
 
 interface GymCardProviderProps {
@@ -101,6 +104,7 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
         
         // Atualiza a ficha com o novo treino
         data.id = fetchCardsByID.data.training.length + 1;
+        data.image = ""
         fetchCardsByID.data.training.push(data)
 
         // Atualiza a ficha antiga pela nova
@@ -127,38 +131,43 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
     }
 
     // Adicionar novos treinos
-    async function updateTraining(data: CreateTraining, trainingId: number, cardId: number) {
+    async function updateTraining(data: CreateTraining, trainingId: number, cardId: number, image: string) {
         // Obtem o registro do antigo treino pelo ID
         const fetchCardsByID = await api.get( `/cards/${cardId}`);
-        console.log('ficha antiga: ', fetchCardsByID.data.training)
 
         // Removendo o treino que esta sendo editado da lita de treino
         let oldTrainingWithoutTheEdit = fetchCardsByID.data.training.filter(training => training.id !== trainingId)
-        console.log('primeiro filter: ', oldTrainingWithoutTheEdit)
-
         fetchCardsByID.data.training = oldTrainingWithoutTheEdit;
-        console.log('ficha antiga 2: ', fetchCardsByID.data.training)
-
+        
         // Adicionando o novo treino editado a lista de treinos
         let updatingTraining = fetchCardsByID.data.training.filter(training => training.id === trainingId)
-        console.log('update before: ', updatingTraining)
-        updatingTraining = data;
-
-        console.log('update after: ', updatingTraining)
-        updatingTraining.id = trainingId
-        console.log('update after 2: ', updatingTraining)
-
-
+        data.image = image;
+        data.id = trainingId;
+        updatingTraining = data
 
         // console.log('oldCard: ', fetchCardsByID.data.training)
         fetchCardsByID.data.training.push(updatingTraining);
-        console.log('newCard: ', fetchCardsByID.data.training)
 
-        // console.log(fetchCardsByID.data.training)
+        // Atualiza a ficha antiga pela nova
+        await api.patch(`/cards/${cardId}`, fetchCardsByID.data)
 
-        // Atualiza a ficha com o novo treino
-        // data.id = fetchCardsByID.data.training.length + 1;
-        // fetchCardsByID.data.training.push(data)
+        // Atualiza a página com a lista atualizada
+        fetchCards();
+    }
+
+    async function updatePicture(cardId: number, trainingId: number, imageBase64: string) {
+        // Obtem o registro do antigo treino pelo ID
+        const fetchCardsByID = await api.get( `/cards/${cardId}`);
+        console.log('inicial: ',fetchCardsByID.data)
+
+        let getCurrentTraining = fetchCardsByID.data.training.filter(training => training.id === trainingId)
+        console.log('current: ', getCurrentTraining)
+        getCurrentTraining[0].image = imageBase64
+
+        // // Removendo o treino que esta sendo editado da lita de treino
+        let oldTrainingWithoutTheEdit = fetchCardsByID.data.training.filter(training => training.id !== trainingId)
+        fetchCardsByID.data.training = oldTrainingWithoutTheEdit;
+        fetchCardsByID.data.training.push(getCurrentTraining[0])
 
         // Atualiza a ficha antiga pela nova
         await api.patch(`/cards/${cardId}`, fetchCardsByID.data)
@@ -172,7 +181,7 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
     }, [])
 
     return (
-        <GymCardContext.Provider value={{ cards, trainings, createCard, updateCard, deleteCard, addNewTraining, deleteTraining, updateTraining }}>
+        <GymCardContext.Provider value={{ cards, trainings, createCard, updateCard, deleteCard, addNewTraining, deleteTraining, updateTraining, updatePicture }}>
             {children}
         </GymCardContext.Provider>
     )

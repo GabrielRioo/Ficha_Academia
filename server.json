@@ -5,27 +5,23 @@
       "weekDay": "1",
       "training": [
         {
-          "name": "Gabriel Paiva Rio",
-          "series": 1,
-          "repetitions": 2,
-          "weight": 3,
-          "id": 2
-        },
-        {
-          "name": "Alteres",
+          "name": "Supino Reto",
           "series": 3,
           "repetitions": 3,
           "weight": 3,
+          "id": 2,
+          "image": ""
+        },
+        {
+          "name": "Gabriel Paiva Rio",
+          "series": 3,
+          "repetitions": 3,
+          "weight": 3,
+          "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgOTYgOTYwIDk2MCIgd2lkdGg9IjQ4Ij48cGF0aCBkPSJNMjYxIDkzNnEtMjQuNzUgMC00Mi4zNzUtMTcuNjI1VDIwMSA4NzZWMzA2aC00MXYtNjBoMTg4di0zMGgyNjR2MzBoMTg4djYwaC00MXY1NzBxMCAyNC0xOCA0MnQtNDIgMThIMjYxWm00MzgtNjMwSDI2MXY1NzBoNDM4VjMwNlpNMzY3IDc5MGg2MFYzOTFoLTYwdjM5OVptMTY2IDBoNjBWMzkxaC02MHYzOTlaTTI2MSAzMDZ2NTcwLTU3MFoiLz48L3N2Zz4=",
           "id": 1
         }
       ],
       "id": 1
-    },
-    {
-      "cardName": "Treino de Pernas",
-      "weekDay": "1",
-      "training": [],
-      "id": 2
     }
   ]
 }

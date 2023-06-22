@@ -72,6 +72,7 @@ export const GymModalInputs = styled.div`
     }
 
     input,select {
+        width: 100%;
         border: 0;
         border-radius: 6px;
         padding: 1rem;
@@ -82,6 +83,15 @@ export const GymModalInputs = styled.div`
         &::placeholder {
             color: ${props => props.theme['gray-500']};
         } 
+    }
+
+    img {
+        
+        width: 30rem;
+        max-width: 30rem;
+        max-height: 20rem;
+        border: 2px solid ${props => props.theme['green-300']};
+        border-radius: 6px;
     }
 
     

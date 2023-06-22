@@ -62,7 +62,7 @@ export function GymCard() {
                                     {
                                         card.training.map(training => {
                                             return (
-                                                <tr key={training.name}>
+                                                <tr key={training.id}>
                                                     <td>{training.name}</td>
                                                     <td>{training.series}</td>
                                                     <td>{training.repetitions}</td>
@@ -74,7 +74,7 @@ export function GymCard() {
                                                                 <Image size={24} color="#00B37E" />
                                                             </Dialog.Trigger>
 
-                                                            <CustomGymModal type="picture" card={card} />
+                                                            <CustomGymModal type="picture" card={card} training={training} />
                                                         </Dialog.Root>
 
                                                         <Dialog.Root>
