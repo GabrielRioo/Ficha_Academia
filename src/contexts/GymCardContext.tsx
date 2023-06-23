@@ -19,8 +19,8 @@ interface Training {
     id: number;
     name: string;
     series: number;
-    repetitions: number;
-    weight: number;
+    repetitions: string;
+    weight: string;
     image?: string;
 }
 
@@ -28,8 +28,8 @@ interface CreateTraining {
     id?: number;
     name: string;
     series: number;
-    repetitions: number;
-    weight: number;
+    repetitions: string;
+    weight: string;
     image?: string;
 }
 

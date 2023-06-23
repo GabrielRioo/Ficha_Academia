@@ -22,8 +22,8 @@ interface Training {
     id: number;
     name: string;
     series: number;
-    repetitions: number;
-    weight: number;
+    repetitions: string;
+    weight: string;
     image?: string;
 }
 
@@ -43,8 +43,8 @@ type NewCardFormInputs = z.infer<typeof newCardFormSchema>
 const newTrainingFormSchema = z.object({
     name: z.string(),
     series: z.number(),
-    repetitions: z.number(),
-    weight: z.number(),
+    repetitions: z.string(),
+    weight: z.string(),
     image: z.string(),
 })
 type NewTrainingFormInputs = z.infer<typeof newTrainingFormSchema>

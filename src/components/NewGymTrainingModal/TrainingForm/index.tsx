@@ -16,13 +16,13 @@ export function TrainingForm({ register }: any) {
                 required
             />
             <input
-                type="number"
+                type="text"
                 placeholder="Quantidade de repetições"
                 {...register('repetitions', { valueAsNumber: true })}
                 required
             />
             <input
-                type="number"
+                type="text"
                 placeholder="Peso da carga (opicional)"
                 {...register('weight', { valueAsNumber: true })}
             />

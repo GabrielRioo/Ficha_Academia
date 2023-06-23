@@ -25,7 +25,7 @@ export function EditTrainingForm({ register, valuesToChange }: any) {
 
             <label>Quantidade de repetições</label>
             <input
-                type="number"
+                type="text"
                 placeholder="Quantidade de repetições"
                 // value={valuesToChange.repetitions}
                 {...register('repetitions', { valueAsNumber: true })}
@@ -34,7 +34,7 @@ export function EditTrainingForm({ register, valuesToChange }: any) {
 
             <label>Quantidade de Carga</label>
             <input
-                type="number"
+                type="text"
                 placeholder="Peso da carga (opicional)"
                 // value={valuesToChange.weight}
                 {...register('weight', { valueAsNumber: true })}
