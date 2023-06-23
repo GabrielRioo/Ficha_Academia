@@ -125,6 +125,8 @@ export const GymCardTable = styled.table`
             cursor: pointer;
             transition: opacity .2s
         }
+
+        
     }
 
     @media(max-width: 415px) {

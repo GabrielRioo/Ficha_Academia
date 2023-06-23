@@ -79,7 +79,7 @@ export function GymCard() {
                                         {
                                             card.training.map(training => {
                                                 return (
-                                                    <tr key={training.id}>
+                                                    <tr key={training.id} tabIndex={training.id}>
                                                         <td>{training.name}</td>
                                                         <td>{training.series}</td>
                                                         <td>{training.repetitions}</td>
