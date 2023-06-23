@@ -94,27 +94,28 @@ export const GymCardTable = styled.table`
         background-color: ${props => props.theme['gray-600']};
 
         &:first-child {
-        border-top-left-radius: 12px;
+            width: 30rem;
+            border-top-left-radius: 12px;
         }
 
         &:last-child {
-        border-top-right-radius: 12px;
+            border-top-right-radius: 12px;
         }
     }
 
     td {
-        padding: .7rem 2rem;
+        /* padding: .7rem 2rem; */
         background-color: ${props => props.theme['gray-700']};
         text-align: center;
 
         &:first-child {
-        border-top-left-radius: 6px;
-        border-bottom-left-radius: 6px;
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
         }
 
         &:last-child {
-        border-top-right-radius: 6px;
-        border-bottom-right-radius: 6px;
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
         }
 
         svg:hover {
@@ -126,16 +127,29 @@ export const GymCardTable = styled.table`
 
     @media(max-width: 415px) {
         margin-top: 0;
+
+        th {
+            &:first-child {
+                min-width: 25rem;
+            }
+        }
     }
 
     @media(max-width: 375px) {
         margin-top: 0;
+
+        th {
+            &:first-child {
+                min-width: 25rem;
+            }
+        }
     }
 `
 
 export const GymCardButtons = styled.td`
     display: flex;
     justify-content: space-around;
+    padding: .7rem 2rem;
 `
 
 export const GymCardNewTraining = styled.button`
