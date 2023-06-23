@@ -18,13 +18,13 @@ export function TrainingForm({ register }: any) {
             <input
                 type="text"
                 placeholder="Quantidade de repetições"
-                {...register('repetitions', { valueAsNumber: true })}
+                {...register('repetitions')}
                 required
             />
             <input
                 type="text"
                 placeholder="Peso da carga (opicional)"
-                {...register('weight', { valueAsNumber: true })}
+                {...register('weight')}
             />
         </GymModalInputs>
     )

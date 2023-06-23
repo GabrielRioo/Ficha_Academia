@@ -101,6 +101,7 @@ export function CustomGymModal(props: NewGymProps) {
     // Criar um novo Treino (ficha)
     async function handleCreateNewTraining(data: NewTrainingFormInputs) {
         const { name, series, repetitions, weight } = data
+        console.log(data)
 
         let cardID = 0
         if (props.card?.id !== undefined) cardID = props.card?.id

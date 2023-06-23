@@ -28,7 +28,7 @@ export function EditTrainingForm({ register, valuesToChange }: any) {
                 type="text"
                 placeholder="Quantidade de repetições"
                 // value={valuesToChange.repetitions}
-                {...register('repetitions', { valueAsNumber: true })}
+                {...register('repetitions')}
                 required
             />
 
@@ -37,7 +37,7 @@ export function EditTrainingForm({ register, valuesToChange }: any) {
                 type="text"
                 placeholder="Peso da carga (opicional)"
                 // value={valuesToChange.weight}
-                {...register('weight', { valueAsNumber: true })}
+                {...register('weight')}
             />
         </GymModalInputs>
     )
