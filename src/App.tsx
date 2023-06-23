@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from './styles/themes/default'
 import { Header } from "./components/Header";
 import { GymCardProvider } from "./contexts/GymCardContext";
+import { Footer } from "./components/Footer";
 
 export function App() {
   return (
@@ -13,6 +14,7 @@ export function App() {
         <GymCardProvider>
           <Header />
           <GymCard />
+          <Footer />
         </GymCardProvider>
       </ThemeProvider>
     </>
