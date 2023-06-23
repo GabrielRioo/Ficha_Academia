@@ -62,6 +62,8 @@ export const GymCardContainer = styled.main`
     @media(max-width: 375px) {
         display: block;
         padding: 0;
+        text-align: center;
+
 
         div {
             display: block;
@@ -130,7 +132,7 @@ export const GymCardTable = styled.table`
 
         th {
             &:first-child {
-                min-width: 25rem;
+                min-width: 100vw;
             }
         }
     }
@@ -140,7 +142,7 @@ export const GymCardTable = styled.table`
 
         th {
             &:first-child {
-                min-width: 25rem;
+                min-width: 100vw;
             }
         }
     }
