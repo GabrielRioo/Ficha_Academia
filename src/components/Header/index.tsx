@@ -1,5 +1,5 @@
 import { HeaderContainer, NewGymCardButton } from "./styles";
-import LogoImg from '../../assets/Logo.svg'
+import LogoImg from '../../assets/newLogo.png'
 import *  as Dialog from '@radix-ui/react-dialog'
 import { CustomGymModal } from "../NewGymTrainingModal";
 

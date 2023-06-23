@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const GymCardContainer = styled.main `
+export const GymCardContainer = styled.main`
     width: 100%;
     max-width: 1120px;
     margin: 4rem auto 0;
@@ -35,7 +35,52 @@ export const GymCardContainer = styled.main `
             opacity: 0.7;
             transition: opacity .2s
         }
+
     }
+
+    @media(max-width: 415px) {
+        display: block;
+        padding: 0;
+
+        div {
+            display: block;
+            margin: 0 auto .5rem;
+            text-align: center;
+
+            p {
+                margin: auto;
+            }
+
+            h2{
+                display:inline-block;
+                margin-right: 1rem;
+            }
+        }
+            
+    }
+
+    @media(max-width: 375px) {
+        display: block;
+        padding: 0;
+
+        div {
+            display: block;
+            margin-left: 0;
+
+            p {
+                margin: auto;
+            }
+
+            h2{
+                display:inline-block;
+            }
+        }
+    }
+`
+
+export const TableContainer = styled.section`
+    width: 100%;
+    overflow-x: auto;
 `
 
 export const GymCardTable = styled.table`
@@ -78,14 +123,22 @@ export const GymCardTable = styled.table`
             transition: opacity .2s
         }
     }
+
+    @media(max-width: 415px) {
+        margin-top: 0;
+    }
+
+    @media(max-width: 375px) {
+        margin-top: 0;
+    }
 `
 
-export const GymCardButtons = styled.td `
+export const GymCardButtons = styled.td`
     display: flex;
     justify-content: space-around;
 `
 
-export const GymCardNewTraining = styled.button `
+export const GymCardNewTraining = styled.button`
     width: 100%;
     padding: .5rem;
     background-color: ${props => props.theme['green-300']};
@@ -101,4 +154,5 @@ export const GymCardNewTraining = styled.button `
         background-color: ${props => props.theme['green-500']};
         transition: background-color .2s
     }
+
 `

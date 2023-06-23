@@ -8,6 +8,12 @@ export const HeaderContainer = styled.header `
     height: 5rem;
 
     background-color: ${props => props.theme['gray-600']};
+
+    img {
+        width: 10rem;
+        height: 4em;
+        margin-top: -0.6rem;
+    }
 `
 
 export const NewGymCardButton = styled.button `

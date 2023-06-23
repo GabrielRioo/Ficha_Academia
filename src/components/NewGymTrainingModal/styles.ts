@@ -20,6 +20,16 @@ export const Content = styled(Dialog.Content)`
     left: 50%;
     transform: translate(-50%, -50%);
 
+    @media(max-width: 415px) {
+        min-width: 22rem;
+        /* transform: translate(-50%, -50%); */
+    }
+
+    @media(max-width: 375px) {
+        min-width: 22rem;
+        /* transform: translate(-58%, -60%); */
+    }
+
     form {
         display: flex;
         flex-direction: column;
