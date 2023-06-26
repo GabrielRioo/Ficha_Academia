@@ -80,7 +80,7 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
         // using local storage to persist data
         const getLocalStorage = localStorage.getItem('cards')
         if (getLocalStorage !== null) {
-            let updateLocalStorage = JSON.parse(getLocalStorage);
+            const updateLocalStorage = JSON.parse(getLocalStorage);
             data.id = updateLocalStorage.length + 1;
             updateLocalStorage.push(data)
 
@@ -108,7 +108,7 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
 
     async function deleteCard(cardId: number) {
         // using local storage to persist data
-        let getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
+        const getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
         const removingCardByID = getLocalStorage.filter((card: any) => card.id !== cardId)
 
         localStorage.setItem('cards', JSON.stringify(removingCardByID))
@@ -122,13 +122,13 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
 
     async function updateCard(data: CreateCard, cardId: number) {
         // using local storage to persist data
-        let getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
+        const getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
 
-        let getCardByID = getLocalStorage.filter((card: any) => card.id === cardId)
+        const getCardByID = getLocalStorage.filter((card: any) => card.id === cardId)
         getCardByID[0].cardName = data.cardName;
         getCardByID[0].weekDay = data.weekDay
 
-        let newCard = getLocalStorage.filter((card: any) => card.id !== cardId)
+        const newCard = getLocalStorage.filter((card: any) => card.id !== cardId)
         newCard.push(getCardByID[0])
 
         localStorage.setItem('cards', JSON.stringify(newCard))
@@ -143,14 +143,14 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
     // Adicionar novos treinos
     async function addNewTraining(data: CreateTraining, cardId: number) {
         // using local storage to persist data
-        let getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
-        let getCardByID = getLocalStorage.filter((card: any) => card.id === cardId)
+        const getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
+        const getCardByID = getLocalStorage.filter((card: any) => card.id === cardId)
         data.id = getCardByID[0].training.length + 1;
         data.image = "";
 
         getCardByID[0].training.push(data)
 
-        let removingOldCardByID = getLocalStorage.filter((card: any) => card.id !== cardId)
+        const removingOldCardByID = getLocalStorage.filter((card: any) => card.id !== cardId)
         removingOldCardByID.push(getCardByID[0])
 
         localStorage.setItem('cards', JSON.stringify(removingOldCardByID))
@@ -173,17 +173,17 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
 
     // Adicionar novos treinos
     async function deleteTraining(trainingId: number, cardId: number) {
-        let getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
+        const getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
 
         //obtem o Card pelo ID
-        let getCardByID = getLocalStorage.filter((card: any) => card.id === cardId)
+        const getCardByID = getLocalStorage.filter((card: any) => card.id === cardId)
 
         // Obtem todos o treinos, exceto o que esta sendo deletado
-        let currentTrainings = getCardByID[0].training.filter((training: any) => training.id !== trainingId)
+        const currentTrainings = getCardByID[0].training.filter((training: any) => training.id !== trainingId)
         getCardByID[0].training = currentTrainings
 
         // remove o card antigo
-        let removeOldCardByID = getLocalStorage.filter((card: any) => card.id !== cardId)
+        const removeOldCardByID = getLocalStorage.filter((card: any) => card.id !== cardId)
 
         // adiciona o card atualizado
         removeOldCardByID.push(getCardByID[0])
@@ -207,13 +207,13 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
 
     // Adicionar novos treinos
     async function updateTraining(data: CreateTraining, trainingId: number, cardId: number, image: string) {
-        let getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
+        const getLocalStorage = JSON.parse(localStorage.getItem('cards')!)
 
         //obtem o Card pelo ID
-        let getCardByID = getLocalStorage.filter((card: any) => card.id === cardId)
+        const getCardByID = getLocalStorage.filter((card: any) => card.id === cardId)
 
         // Obtem todos o treinos, exceto o que esta sendo deletado
-        let currentTrainings = getCardByID[0].training.filter((training: any) => training.id !== trainingId)
+        const currentTrainings = getCardByID[0].training.filter((training: any) => training.id !== trainingId)
         getCardByID[0].training = currentTrainings;
 
         // Adicionando o novo treino editado a lista de treinos
@@ -222,7 +222,7 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
         getCardByID[0].training.push(data)
 
         // remove o card antigo
-        let removeOldCardByID = getLocalStorage.filter((card: any) => card.id !== cardId)
+        const removeOldCardByID = getLocalStorage.filter((card: any) => card.id !== cardId)
 
         // adiciona o card atualizado
         removeOldCardByID.push(getCardByID[0])
@@ -258,12 +258,12 @@ export function GymCardProvider({ children }: GymCardProviderProps) {
         const fetchCardsByID = await api.get( `/cards/${cardId}`);
         console.log('inicial: ',fetchCardsByID.data)
 
-        let getCurrentTraining = fetchCardsByID.data.training.filter((training: any) => training.id === trainingId)
+        const getCurrentTraining = fetchCardsByID.data.training.filter((training: any) => training.id === trainingId)
         console.log('current: ', getCurrentTraining)
         getCurrentTraining[0].image = imageBase64
 
         // // Removendo o treino que esta sendo editado da lita de treino
-        let oldTrainingWithoutTheEdit = fetchCardsByID.data.training.filter((training: any) => training.id !== trainingId)
+        const oldTrainingWithoutTheEdit = fetchCardsByID.data.training.filter((training: any) => training.id !== trainingId)
         fetchCardsByID.data.training = oldTrainingWithoutTheEdit;
         fetchCardsByID.data.training.push(getCurrentTraining[0])
 

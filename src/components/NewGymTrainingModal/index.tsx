@@ -83,6 +83,9 @@ export function CustomGymModal(props: NewGymProps) {
         if (modalType === 'editTraining') {
             handleUpdateTraining(data)
         }
+        // if (modalType === 'picture') {
+        //     handleUpdateTraining(data)
+        // }
     }
 
     // Criar um novo Card (ficha)
@@ -117,8 +120,8 @@ export function CustomGymModal(props: NewGymProps) {
     }
 
     async function handleDeleteTraining() {
-        let cardID = props.card?.id!
-        let trainingID = props.training?.id!
+        const cardID = props.card?.id!
+        const trainingID = props.training?.id!
         // if (props.card?.id !== undefined) cardID = props.card?.id
 
         deleteTraining(trainingID, cardID)
@@ -127,9 +130,9 @@ export function CustomGymModal(props: NewGymProps) {
     async function handleUpdateTraining(data: NewTrainingFormInputs) {
         const { name, series, repetitions, weight } = data
 
-        let cardID = props.card?.id!
-        let trainingID = props.training?.id!
-        let image = props.training?.image!
+        const cardID = props.card?.id!
+        const trainingID = props.training?.id!
+        const image = props.training?.image!
         // if (props.card?.id !== undefined) cardID = props.card?.id
 
         updateTraining({
@@ -157,7 +160,7 @@ export function CustomGymModal(props: NewGymProps) {
     const handleImageUpload = (imageData: string) => {
         setJsonObject({ image: imageData });
         console.log(jsonObject)
-      };
+    };
 
     return (
         <Dialog.Portal>
@@ -224,8 +227,7 @@ export function CustomGymModal(props: NewGymProps) {
                     {
                         modalType === 'picture' &&
                         <div>
-                            <PictureForm onImageUpload={handleImageUpload} cardId={props.card?.id!} trainingId={props.training?.id!} trainingImage={props.training?.image!}/>
-                            <p style={{color: 'red', textAlign: 'center', marginTop: '1rem'}}>Função ainda não disponível.</p>
+                            <PictureForm onImageUpload={handleImageUpload} cardId={props.card?.id!} trainingId={props.training?.id!} trainingImage={props.training?.image!} />
                             <GymModalButton variant="green" type="submit" disabled>Salvar</GymModalButton>
                         </div>
                     }

@@ -4,6 +4,7 @@ import *  as Dialog from '@radix-ui/react-dialog'
 import { CustomGymModal } from "../NewGymTrainingModal";
 
 export function Header() {
+    console.log('img: ', LogoImg)
     return (
         <HeaderContainer>
             <img src={LogoImg} alt="" />
